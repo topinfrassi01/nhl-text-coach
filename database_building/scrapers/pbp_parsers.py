@@ -77,7 +77,7 @@ class ParserShot(EventParser):
         return {
             "shooter_id": event_details["shootingPlayerId"],
             "shooter_team_id": event_details["eventOwnerTeamId"],
-            "goaltender_id": event_details["goalieInNetId"],
+            "goaltender_id": event_details.get("goalieInNetId", None),
             "type": event_details["shotType"],
             "zone": Zone[event_details["zoneCode"]]
         }

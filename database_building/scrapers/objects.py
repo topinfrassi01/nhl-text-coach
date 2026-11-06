@@ -143,7 +143,7 @@ class Faceoff(Event):
 class Shot(Event):
     shooter_id: int
     shooter_team_id: int
-    goaltender_id: int
+    goaltender_id: Optional[int]
     type: str
     zone: Zone
 
