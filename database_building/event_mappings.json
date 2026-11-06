@@ -1,0 +1,60 @@
+{
+    "FAC": {
+        "long_name":"faceoff",
+        "regex_parser":"^([A-Z]{3}) won (Def|Off|Neu)\\. Zone - ([\\w\\s\\-#'].*) vs ([\\w\\s\\-#'].*)$",
+        "regex_group_names": [
+            "winning_team",
+            "zone",
+            "winning_player",
+            "loosing_player"
+        ]
+    },
+    "SHOT": {
+        "long_name": "shot",
+        "regex_parser": "^([A-Z]{3}) ONGOAL - ([\\w\\s\\-#']*), ([\\w\\-\\s]*),.*(Neu|Off|Def)\\. Zone, ([0-9]*).*$",
+        "regex_group_names":[
+            "team",
+            "player",
+            "type",
+            "zone",
+            "distance_to_net"
+        ]
+    },
+    "HIT": {
+        "long_name": "hit",
+        "regex_parser":"^([A-Z]{3}) ([\\w\\s\\-#']*) HIT ([\\w\\s\\-#']*), (Def|Off|Neu)\\. Zone$",
+        "regex_group_names": [
+            "hitting_player",
+            "receiving_player",
+            "zone"
+        ]
+    },
+    "STOP": {
+        "long_name": "stoppage",
+        "regex_parser":"^(.*)$",
+        "regex_group_names": ["description"]
+    },
+    "BLOCK": {
+        "long_name": "blocked_shot",
+        "regex_parser":"^([\\w\\s#']*) (?:OPPONENT-|)BLOCKED BY ([\\w\\s#']*), ([\\w\\s#']*), (Def|Off|Neu)\\. Zone$",
+        "regex_group_names": [
+            "shooter",
+            "blocker",
+            "shot-type",
+            "zone"
+        ]
+    },
+    "MISS": "missed_shot",
+    "GIVE": "giveaway",
+    "TAKE": "takeaway",
+    "PENL": "penalty_call",
+    "GOAL": "goal",
+    "PSTR": "period_start",
+    "PEND": "period_end",
+    "DELPEN": "delayed_penalty",
+    "GEND": "game_end",
+    "CHL": "challenge",
+    "SOC": "shotout_finished",
+    "EISTR": "early_intermission_start",
+    "EIEND": "early_intermission_end"
+}
