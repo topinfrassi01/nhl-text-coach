@@ -197,6 +197,7 @@ if __name__ == "__main__":
     seasons_to_scrape = list(range(2008, 2027))
     data_folder = Path(__file__).parent.parent.parent / "data"
     #teams = scrape_teams(data_folder)
+    
     #print("Scraping rosters...")
     #rosters = scrape_all_rosters(teams, list(range(2007, 2027)), data_folder / "rosters")
     #print("Scraping schedules...")

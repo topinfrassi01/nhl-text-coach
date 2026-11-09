@@ -37,7 +37,7 @@ class EventParser(ABC):
         return self.event_type(**asdict(base_event), **specific_event_data)
 
     def _parse_common_data(self, game_id:int, data:dict) -> Event:
-        if "xCoord" not in data.get("details", {}):
+        if "xCoord" not in data.get("details", {}) or "yCoord" not in data.get("details", {}):
             location = None
         else:
             location = (float(data["details"]["xCoord"]), float(data["details"]["yCoord"]))
@@ -67,7 +67,7 @@ class ParserFaceoff(EventParser):
             "winningTeamId": event_details["eventOwnerTeamId"],
             "winningPlayerId": event_details["winningPlayerId"],
             "losingPlayerId": event_details["losingPlayerId"],
-            "zone": Zone[event_details["zoneCode"]]
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 class ParserShot(EventParser):
@@ -78,8 +78,8 @@ class ParserShot(EventParser):
             "shooter_id": event_details["shootingPlayerId"],
             "shooter_team_id": event_details["eventOwnerTeamId"],
             "goaltender_id": event_details.get("goalieInNetId", None),
-            "type": event_details["shotType"],
-            "zone": Zone[event_details["zoneCode"]]
+            "type": event_details.get("shotType", None),
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 
@@ -91,7 +91,7 @@ class ParserHit(EventParser):
             "hitting_player_id": event_details["hittingPlayerId"],
             "hitting_player_team_id":event_details["eventOwnerTeamId"],
             "receiving_player_id":event_details["hitteePlayerId"],
-            "zone": Zone[event_details["zoneCode"]]
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 
@@ -100,7 +100,7 @@ class ParserStop(EventParser):
     def _parse_specific_data(self, data:dict) -> dict:
         event_details = data["details"]
         return {
-            "reason": event_details["reason"]
+            "reason": event_details.get("reason", None)
         }
 
 
@@ -126,8 +126,8 @@ class ParserFailedShotAttempt(EventParser):
         return {
             "shooting_player_id": event_details["shootingPlayerId"],
             "shooting_player_team_id": event_details["eventOwnerTeamId"],
-            "goaltender_id": event_details["goalieInNetId"],
-            "zone": Zone[event_details["zoneCode"]]
+            "goaltender_id": event_details.get("goalieInNetId", None),
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 
@@ -137,7 +137,7 @@ class ParserGiveaway(EventParser):
         event_details = data["details"]
         return {
             "player_id": event_details["playerId"],
-            "zone": Zone[event_details["zoneCode"]]
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 
@@ -147,7 +147,7 @@ class ParserTakeaway(EventParser):
         event_details = data["details"]
         return {
             "player_id": event_details["playerId"],
-            "zone": Zone[event_details["zoneCode"]]
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 
@@ -161,7 +161,7 @@ class ParserGoal(EventParser):
             "primary_assist_id": event_details.get("assist1PlayerId", None),
             "secondary_assist_id": event_details.get("assist2PlayerId", None),
             "shot_type": event_details.get("shotType", None),
-            "zone": Zone[event_details["zoneCode"]]
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None
         }
 
 class ParserMissedShot(EventParser):
@@ -171,9 +171,9 @@ class ParserMissedShot(EventParser):
         return {
             "shooting_player_id": event_details["shootingPlayerId"],
             "shooting_player_team_id": event_details["eventOwnerTeamId"],
-            "shot_type": event_details["shotType"],
-            "zone": Zone[event_details["zoneCode"]],
-            "reason": event_details["reason"]
+            "shot_type": event_details.get("shotType", None),
+            "zone": Zone[event_details["zoneCode"]] if "zoneCode" in event_details else None,
+            "reason": event_details.get("reason", None)
         }
 
 

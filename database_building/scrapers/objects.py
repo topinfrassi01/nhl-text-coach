@@ -28,7 +28,7 @@ class Team():
 @attrs.define(frozen=True)
 class Event:
     game_id: int
-    period: int = field(validator=[validators.gt(0), validators.lt(6)])
+    period: int
     time_elapsed:int # in seconds
     home_team_defending_side: Optional[str]
     location: Optional[tuple[float, float]] #xC,yC
@@ -136,7 +136,7 @@ class Faceoff(Event):
     winningTeamId: str
     winningPlayerId: int
     losingPlayerId: int 
-    zone: Zone
+    zone: Optional[Zone]
 
 
 @attrs.define(frozen=True)
@@ -144,8 +144,8 @@ class Shot(Event):
     shooter_id: int
     shooter_team_id: int
     goaltender_id: Optional[int]
-    type: str
-    zone: Zone
+    type: Optional[str]
+    zone: Optional[Zone]
 
 
 @attrs.define(frozen=True)
@@ -153,12 +153,12 @@ class Hit(Event):
     hitting_player_id: int
     hitting_player_team_id: int
     receiving_player_id: int
-    zone: Zone
+    zone: Optional[Zone]
 
 
 @attrs.define(frozen=True)
 class Stop(Event):
-    reason: str
+    reason: Optional[str]
 
 
 @attrs.define(frozen=True)
@@ -178,20 +178,20 @@ class BlockedShot(Event):
 class FailedShotAttempt(Event):
     shooting_player_id: int
     shooting_player_team_id: int
-    goaltender_id: int
-    zone: Zone
+    goaltender_id: Optional[int]
+    zone: Optional[Zone]
 
 
 @attrs.define(frozen=True)
 class Giveaway(Event):
     player_id: int
-    zone: Zone
+    zone: Optional[Zone]
 
 
 @attrs.define(frozen=True)
 class Takeaway(Event):
     player_id: int
-    zone: Zone
+    zone: Optional[Zone]
 
 @attrs.define(frozen=True)
 class Goal(Event):
@@ -200,7 +200,7 @@ class Goal(Event):
     primary_assist_id: Optional[int]
     secondary_assist_id: Optional[int]
     shot_type: Optional[str]
-    zone: Zone
+    zone: Optional[Zone]
 
 
 @attrs.define(frozen=True)
@@ -209,7 +209,7 @@ class MissedShot(Event):
     shooting_player_team_id: int
     shot_type: Optional[str]
     zone: Optional[Zone]
-    reason: str
+    reason: Optional[str]
 
 
 @attrs.define(frozen=True)
